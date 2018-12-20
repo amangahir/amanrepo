@@ -1,0 +1,22 @@
+- hosts: all
+  become: yes
+  remote_user: root
+  become_method: sudo
+  tasks:
+    - name: Installing JDK
+      yum:
+        name: java-1.8.0-openjdk
+        state: present
+    - name: Installing wget
+      yum:
+        name: wget
+        state: present
+    - name: Creating Directory
+      file:
+        path: /opt/tomcat
+        state: directory
+    - name: Download Apache Tomcat
+      get_url:
+        url: https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.29/bin/apache-tomcat-8.5.29.tar.gz
+        dest: /opt/tomcat
+    
